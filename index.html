@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개발자 포트폴리오</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals (e.g., Background: #F5F5F4, Text: #44403C, Accent: #475569) -->
+    <!-- Application Structure Plan: A single-page application with a top navigation bar, an introduction, a categorized skills section, and an interactive project timeline. The timeline is the central feature, allowing users to visualize career progression and filter projects by technology. This structure prioritizes quick skill assessment and deep dives into relevant project experience, which is ideal for recruiters and technical managers. -->
+    <!-- Visualization & Content Choices: The portfolio's core is the project history. Goal: Show change over time and organize detailed information. Method: A custom-built, interactive vertical timeline using HTML/CSS/JS, which is more suitable than a chart. Interaction: Users can click timeline points to open project detail modals and use technology tags to filter the timeline. This provides a high-level overview and a direct path to specific, relevant experiences. Skills are presented in clear, categorized lists for quick scanning. All visuals are built with HTML/CSS, confirming NO SVG/Mermaid. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #F8F9FA;
+            color: #343A40;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+            background-color: #FFFFFF;
+            border: 4px solid #475569;
+            left: -0.625rem;
+            top: 0;
+            z-index: 10;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: #CBD5E1;
+        }
+        .modal-backdrop {
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s ease;
+        }
+        .tag-active {
+            background-color: #334155 !important;
+            color: #FFFFFF !important;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div id="app" class="container mx-auto px-4 sm:px-6 lg:px-8">
+
+        <header id="about" class="py-16 md:py-24 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-800">[김은국]</h1>
+            <br>
+            <h2 class="mt-3 text-2xl md:text-3xl font-medium text-slate-600">Developer & DevOps Engineer Portfolio</h2>
+            <div class="mt-6 text-slate-500 space-x-4">
+                <span>[010-5208-7038]</span> |
+                <span>[fire-sasin@hanmail.net]</span> |
+                <span><a href="https://www.linkedin.com/in/%EC%9D%80%EA%B5%AD-%EA%B9%80-a6974a76/">[LinkedIn 프로필]</a></span>
+            </div>
+            <p class="mt-8 max-w-3xl mx-auto text-lg leading-relaxed text-slate-700">
+                저는 12년 경력의 소프트웨어 개발자이자 DevOps 엔지니어입니다. 특히 **접근제어 및 계정관리 솔루션 개발** 분야에서 깊이 있는 경험을 쌓았으며, **Go 언어**를 활용한 코어 백엔드 시스템 개발에 강점을 가지고 있습니다. 시스템의 안정화, 성능 최적화, 그리고 보안 인증(CC, GS) 획득 과정을 주도하며 제품의 완성도를 높이는 데 기여했습니다. 또한, DevOps 엔지니어로서 배포 환경 구축 및 성능 튜닝 경험을 통해 개발과 운영의 효율성을 동시에 고려하는 시야를 갖추고 있습니다. 최신 기술 도입과 문제 해결에 대한 강한 의지를 바탕으로, 견고하고 확장 가능한 시스템을 구축하는 데 열정적으로 임하고 있습니다.
+            </p>
+        </header>
+
+        <section id="skills" class="py-16 md:py-20 border-t border-slate-200">
+            <h3 class="text-3xl font-bold text-center text-slate-800 mb-12">핵심 역량</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h4 class="text-xl font-bold text-slate-700 mb-4">프로그래밍 언어</h4>
+                    <ul class="space-y-2 text-slate-600">
+                        <li><span class="font-semibold text-slate-800">Go (7년 이상):</span> 핵심 백엔드 및 Proxy 서버 개발</li>
+                        <li><span class="font-semibold text-slate-800">Node.js (3년):</span> 웹 서버 및 API 게이트웨이 개발</li>
+                        <li><span class="font-semibold text-slate-800">C (WinAPI):</span> Windows 2FA, DLL Injection</li>
+                        <li><span class="font-semibold text-slate-800">C# (.NET):</span> 솔루션 Agent 개발</li>
+                        <li><span class="font-semibold text-slate-800">JavaScript/Angular.js (2년):</span> 웹 UI 개발</li>
+                        <li><span class="font-semibold text-slate-800">Java (1년):</span> SI 프로젝트, 연동 API 개발</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h4 class="text-xl font-bold text-slate-700 mb-4">OS 지식 및 경험</h4>
+                    <ul class="space-y-2 text-slate-600">
+                        <li><span class="font-semibold text-slate-800">Linux (CentOS, Ubuntu):</span> Agent 개발, SE 경험</li>
+                        <li><span class="font-semibold text-slate-800">Windows (Server 2008-2019):</span> Agent 개발, SE 경험</li>
+                        <li><span class="font-semibold text-slate-800">AIX</span></li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h4 class="text-xl font-bold text-slate-700 mb-4">인증 및 품질 관리</h4>
+                    <ul class="space-y-2 text-slate-600">
+                        <li><span class="font-semibold text-slate-800">CC인증 (3회):</span> 국가용 보안요구사항 V3.0 준수 및 총괄</li>
+                        <li><span class="font-semibold text-slate-800">GS인증 (2회, 1등급):</span> 제품 품질 인증 획득</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm col-span-1 md:col-span-2 lg:col-span-3">
+                    <h4 class="text-xl font-bold text-slate-700 mb-4">시스템 관리 및 미들웨어</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">IBM Security Identity Manager</span>
+                        <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">IBM Security Directory Integrator</span>
+                        <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">IBM Cognos Framework Manager</span>
+                        <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">IBM Tivoli Common Reporting</span>
+                        <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">IBM DB2</span>
+                        <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">MongoDB</span>
+                        <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">Oracle VirtualBox</span>
+                        <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">LDAP</span>
+                        <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">RabbitMQ</span>
+                        <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">GIT</span>
+                        <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">JIRA</span>
+                        <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">Docker</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-16 md:py-20 border-t border-slate-200">
+            <h3 class="text-3xl font-bold text-center text-slate-800 mb-4">주요 프로젝트</h3>
+            <p class="text-center text-slate-600 mb-12">경력 타임라인을 통해 주요 프로젝트 경험을 살펴보세요.</p>
+            
+            <div id="filter-container" class="flex flex-wrap justify-center gap-2 mb-12"></div>
+
+            <div class="relative pl-8">
+                <div class="timeline-line"></div>
+                <div id="timeline-container" class="space-y-12"></div>
+            </div>
+        </section>
+
+        <footer class="text-center py-10 mt-16 border-t border-slate-200 text-slate-500">
+            <p>&copy; 2025 [김은국]. All Rights Reserved.</p>
+        </footer>
+
+    </div>
+
+    <div id="project-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="modal-backdrop fixed inset-0 bg-black bg-opacity-50" onclick="closeModal()"></div>
+        <div class="modal-content bg-white rounded-lg shadow-xl w-11/12 md:w-3/4 lg:w-2/3 max-w-4xl max-h-[90vh] overflow-y-auto transform scale-95">
+            <div class="sticky top-0 bg-white px-6 py-4 border-b border-slate-200 flex justify-between items-center z-10">
+                <h4 id="modal-title" class="text-2xl font-bold text-slate-800"></h4>
+                <button onclick="closeModal()" class="text-slate-500 hover:text-slate-800 text-2xl">&times;</button>
+            </div>
+            <div class="p-6 md:p-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div><strong class="text-slate-600">기간:</strong> <span id="modal-period"></span></div>
+                    <div><strong class="text-slate-600">역할:</strong> <span id="modal-role"></span></div>
+                    <div><strong class="text-slate-600">인원:</strong> <span id="modal-team"></span></div>
+                </div>
+                <div class="mb-6">
+                    <strong class="text-slate-600 block mb-2">기술 스택:</strong>
+                    <div id="modal-stack" class="flex flex-wrap gap-2"></div>
+                </div>
+                <div class="mb-6">
+                    <strong class="text-slate-600 block mb-2">프로젝트 개요:</strong>
+                    <p id="modal-summary" class="text-slate-700 leading-relaxed"></p>
+                </div>
+                <div>
+                    <strong class="text-slate-600 block mb-2">주요 기여 및 성과:</strong>
+                    <ul id="modal-contributions" class="list-disc list-inside space-y-2 text-slate-700"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const projects = [
+            {
+                id: 1,
+                name: "펜타시스템 ACRA Point Version3 대용량 트래픽 처리 성능 개선",
+                period: "2024년 9월 - 2024년 10월",
+                team: "2명(개발 2명)",
+                role: "백엔드 개발",
+                stack: ["Go", "MongoDB", "RabbitMQ", "DevOps"],
+                summary: "접근제어/계정관리 솔루션 ACRA Point Version3의 대용량 트래픽 처리 성능을 개선하여 시스템 응답 속도 및 안정성을 향상시켰습니다.",
+                contributions: [
+                    "캐싱 서버 도입으로 응답속도 2배 이상 개선",
+                    "일부 API의 큐 방식 사용으로 비동기 처리 효율성 증대",
+                    "Mongodb 인덱스 성능 최적화 및 튜닝",
+                    "HTTP Payload Size, HTTP POST 최대 수신 용량 등 네트워크 파라미터 튜닝"
+                ]
+            },
+            {
+                id: 2,
+                name: "펜타시스템 ACRA Point Version3 결재기능 고도화",
+                period: "2024년 4월 - 2024년 8월",
+                team: "2명(개발 2명)",
+                role: "추가기능 검토 및 재설계, 백엔드 개발",
+                stack: ["Go", "Node.js", "Angular.js"],
+                summary: "ACRA Point Version3의 결재 기능을 사용자 요구사항에 맞춰 고도화하고, 복잡한 결재 프로세스를 유연하게 지원하도록 개선했습니다.",
+                contributions: [
+                    "결재라인 - 다중결재자 설정 기능 구현",
+                    "미결함/상신함/전체함 기능 구현",
+                    "다중위임 및 대리 결재 기능 구현",
+                    "결재자 역할별 API 호출 권한 구현"
+                ]
+            },
+            {
+                id: 3,
+                name: "펜타시스템 ACRA Point Version3 AI(머신러닝)를 활용한 감사 기능",
+                period: "2024년 5월 - 2024년 6월",
+                team: "2명(개발 2명)",
+                role: "요구사항 검토 및 설계, 백엔드 개발",
+                stack: ["Go", "AI/ML"],
+                summary: "ACRA Point Version3에 AI 기반의 비정상 로그인 탐지 및 차단 기능을 도입하여 시스템 보안 감사 기능을 강화했습니다.",
+                contributions: [
+                    "로그인 데이터 전처리 기능 구현",
+                    "클러스터링(DBSCAN)을 사용하여 비정상 로그인 탐지 및 차단 기능 구현"
+                ]
+            },
+            {
+                id: 4,
+                name: "펜타시스템 ACRA Point Version3 GS인증 (1등급)",
+                period: "2024년 1월 - 2024년 3월",
+                team: "2명",
+                role: "수정 사항 변경(개발)",
+                stack: ["GS인증", "Go", "C", "C#", "Node.js"],
+                summary: "ACRA Point Version3의 GS인증 1등급 획득을 위한 제품 개선 및 결함 수정 작업을 수행했습니다.",
+                contributions: [
+                    "GS인증을 위한 시험 및 결함리포트 대응"
+                ]
+            },
+            {
+                id: 5,
+                name: "펜타시스템 ACRA Point Version3 CC인증",
+                period: "2023년 5월 - 2023년 11월",
+                team: "5명(PM 1명, 개발 4명)",
+                role: "CC인증 총괄",
+                stack: ["CC인증", "Go", "Node.js", "C", "C#"],
+                summary: "ACRA Point Version3의 CC(Common Criteria) 인증 Level3 획득을 위한 총괄 업무를 수행했습니다.",
+                contributions: [
+                    "시스템 접근관리제품 보안요구사항 V3.0 반영",
+                    "서버 및 엔드포인트 공통보안요구사항 V3.0 R1 반영",
+                    "보안목표명세서, TOE설계서, 배포문서, 형상관리문서, 취약성분석서 작성",
+                    "전체 시험, 관찰보고서 대응 및 개발환경점검 대응"
+                ]
+            },
+            {
+                id: 6,
+                name: "펜타시스템 ACRA Point Version3 개발",
+                period: "2022년 1월 - 2022년 8월",
+                team: "6명(PM 1명, 개발 5명)",
+                role: "통합 API 서버 및 인증 서버, API 게이트웨이 개발",
+                stack: ["Go", "Node.js", "MongoDB", "RabbitMQ", "JWT"],
+                summary: "ACRA Point Version3의 핵심 백엔드 시스템인 통합 API 서버, 인증 서버 및 API 게이트웨이를 설계하고 개발했습니다.",
+                contributions: [
+                    "MSA와 모놀리틱 아키텍쳐의 중간단계로 제품 설계",
+                    "Node.js 기반 API 게이트웨이 구현 (Routing, Protocol transformation, 로깅)",
+                    "통합 인증/권한 서비스 개발 (세션 기반, JWT)",
+                    "통합 API 서버 개발 및 자동 이력 저장 프로세스 구현",
+                    "제품 설치 바이너리 및 라이선스 체계 개발",
+                    "자체 알림 기능(이메일 포함) 구현"
+                ]
+            },
+            {
+                id: 7,
+                name: "펜타시스템 ACRA Point 안정화",
+                period: "2020년 6월 - 2021년 1월",
+                team: "5명(PM 1명, 개발 3명, QA 1명)",
+                role: "PM 및 엔진개발자로 제품 안정화",
+                stack: ["Go", "Linux", "Docker", "DevOps"],
+                summary: "ACRA Point 솔루션의 안정적인 운영을 위한 제품 안정화 및 배포 환경 최적화를 진행했습니다.",
+                contributions: [
+                    "Linux Agent 소스 포팅 (Oracle Linux, CentOS Stream)",
+                    "Docker 기반 배포 환경 성능 튜닝 (CPU, Memory)"
+                ]
+            },
+            {
+                id: 8,
+                name: "펜타시스템 ACRA Point CC인증 연장 (변경 승인)",
+                period: "2020년 1월 - 2020년 5월",
+                team: "6명(PM 1명, 개발 4명, QA 1명)",
+                role: "웹 총괄로 CC인증 Level3 요건 구현",
+                stack: ["CC인증", "웹 보안", "Google OTP"],
+                summary: "ACRA Point의 CC인증 연장 및 변경 승인을 위한 보안 기능 요구사항 개발 및 웹 취약성 개선을 총괄했습니다.",
+                contributions: [
+                    "웹 취약성 보안 강화 (XSS, ClickJacking, 세션 보안 등)",
+                    "OWASP ZAP, Acunetix 등을 사용한 취약성 분석 및 대응",
+                    "CC인증 관련 문서 작성 총괄",
+                    "SSL(HTTPS) 환경 구성 및 구글 OTP(2-factor) 인증 기능 개발",
+                    "강화된 비밀번호 정책 및 세션 관리 기능 개발"
+                ]
+            },
+            {
+                id: 9,
+                name: "펜타시스템 ACRA Point GS인증",
+                period: "2019년 12월 - 2020년 5월",
+                team: "6명(PM 1명, 개발 4명, QA 1명)",
+                role: "엔진개발자로 GS인증 1등급 획득",
+                stack: ["GS인증", "Go", "C", "C#", ".NET"],
+                summary: "ACRA Point 솔루션의 GS인증 1등급 획득을 위한 엔진 개발 및 보안 취약성 개선을 담당했습니다.",
+                contributions: [
+                    "OWASP ZAP, Zenmap 등을 활용한 취약성 분석 및 보안 강화",
+                    "서버(Golang) 소스 포팅(v1.14) 및 go.mod를 통한 모듈 버전 관리",
+                    "WIN Agent 소스(C, C#) 포팅 (.NET48 / TLS1.3)",
+                    "서버 SSL 통신 취약한 cipher suite 수정 및 결함리포트 대응"
+                ]
+            },
+            {
+                id: 10,
+                name: "펜타시스템 ACRA Point 서버 접근제어/계정관리 Proxy Version 개발",
+                period: "2019년 5월 - 2019년 11월",
+                team: "3명(개발 2명, QA 1명)",
+                role: "엔진개발자로 Proxy 서버(SOCKS5) 개발",
+                stack: ["Go", "TCP/IP", "MongoDB"],
+                summary: "서버 접근제어를 위한 Proxy 서버(SOCKS5)를 개발하여 다양한 프로토콜(telnet, tfp, ssh, rdp)에 대한 접근 통제 및 감사 기능을 제공했습니다.",
+                contributions: [
+                    "Golang 기반 TCP 소켓 서버로 SOCKS5 Proxy 서버 개발 (telnet, tfp, ssh)",
+                    "SOCKS5 인증, 정책 비교, 금지 명령어 체크 로직 구현",
+                    "Golang 기반 RDP Proxy 서버 개발 및 오픈소스 연동",
+                    "2-factor 인증, 정책 검증, 이벤트 DB 저장 로직 구현"
+                ]
+            },
+            {
+                id: 11,
+                name: "펜타시스템 ACRA Point 서버 SSO 솔루션 제작 프로젝트",
+                period: "2018년 8월 – 2019년 4월",
+                team: "3명(개발 2명, QA 1명)",
+                role: "SSO 서버/Agent/클라이언트 개발",
+                stack: ["Go", "C#", "C++", "WinAPI"],
+                summary: "서버 SSO(Single Sign-On) 솔루션을 개발하여 사용자 인증 편의성과 보안을 강화했습니다.",
+                contributions: [
+                    "Golang 기반 SSO 서버 설계 및 구축 (세션 관리, 암호화 통신 등)",
+                    "SSO Windows Agent(C#, C++) 개발 (Credential Provider 연동)",
+                    "SSO 클라이언트(C#, 윈도우 폼) 설계 및 구축 (터미널 연동, 프록시 경유)"
+                ]
+            },
+            {
+                id: 12,
+                name: "펜타시스템 ACRA Point 계정관리 프로젝트",
+                period: "2017년 3월 - 2018년 8월",
+                team: "8명(PM 1명, 개발 5명, QA 2명)",
+                role: "웹 개발 총괄",
+                stack: ["Node.js", "Angular.js", "C#", "MongoDB", "LDAP"],
+                summary: "ACRA Point의 계정관리 솔루션을 신규 개발하여 기업 내 계정의 전반적인 라이프사이클을 통합 관리하는 시스템을 구축했습니다.",
+                contributions: [
+                    "접근제어와 통합된 UI(콘솔) 설계",
+                    "계정 라이프사이클 관리 기능 구현 (신청, 변경, 삭제, 동기화 등)",
+                    "Active Directory 계정관리 기능 개발",
+                    "분석 보고서(Excel/CSV) 자동 이메일 발송 기능 구현"
+                ]
+            },
+            {
+                id: 13,
+                name: "펜타시스템 ACRA Point CC인증 프로젝트",
+                period: "2016년 11월 - 2017년 2월",
+                team: "6명(PM 1명, 개발 4명, QA 1명)",
+                role: "웹 총괄",
+                stack: ["CC인증", "웹 보안", "Google OTP"],
+                summary: "ACRA Point 솔루션의 CC(Common Criteria) 인증 Level3 획득을 위한 보안 기능 요구사항 개발 및 웹 취약성 개선을 총괄했습니다.",
+                contributions: [
+                    "웹 취약성 보안 기능 개발 (XSS, ClickJacking, 세션 보안 등)",
+                    "OWASP ZAP, Acunetix 등을 활용한 취약성 분석 및 대응",
+                    "CC인증 관련 문서 작성 총괄",
+                    "SSL(HTTPS) 환경 구성 및 구글 OTP(2-factor) 인증 기능 개발"
+                ]
+            },
+            {
+                id: 14,
+                name: "펜타시스템 ACRA Point 프로젝트",
+                period: "2014년 7월 - 2016년 10월",
+                team: "3명(PM 1명, 개발 2명)",
+                role: "웹 개발 총괄",
+                stack: ["Node.js", "Angular.js", "MongoDB", "RabbitMQ", "Websocket"],
+                summary: "ACRA Point 접근제어 솔루션의 초기 개발 단계에서 웹 UI 및 백엔드 시스템을 설계하고 구현했습니다.",
+                contributions: [
+                    "Node.js 기반 백엔드 및 Express.js 프레임워크 구성",
+                    "Socket.io를 사용한 실시간 양방향 통신 모듈 구축",
+                    "Angular.js 기반 Front-End SPA 환경 구성",
+                    "MongoDB 구축 및 Replica Set을 통한 이중화 구성"
+                ]
+            },
+            {
+                id: 15,
+                name: "삼성경제연구소 계정관리 프로젝트",
+                period: "2014년 5월 - 2014년 6월",
+                team: "2명(PM 1명, SE 1명)",
+                role: "SE 및 보고서 구축",
+                stack: ["IBM SIM", "IBM Cognos", "Oracle", "AIX"],
+                summary: "삼성경제연구소의 계정관리 시스템을 구축하고 관련 보고서 시스템을 개발했습니다.",
+                contributions: [
+                    "IBM Security Identity Manager(SIM) 구축 및 정책 설계",
+                    "IBM Cognos Framework Manager, TCR을 통한 보고서 작성"
+                ]
+            },
+            {
+                id: 16,
+                name: "나이스평가 통합계정관리 프로젝트",
+                period: "2013년 8월 - 2014년 4월",
+                team: "5명(PM 1명, SE 3명, 개발 1명)",
+                role: "SE 및 개발",
+                stack: ["IBM SIM", "Java", "SOAP", "IBM Cognos"],
+                summary: "나이스평가의 통합 계정관리 시스템을 구축하고, IBM 계정관리 솔루션 연동 API 및 보고서 시스템을 개발했습니다.",
+                contributions: [
+                    "SIM 구축 및 서버 계정관리 정책 설계",
+                    "RBAC(역할 기반 접근제어) 환경 구성",
+                    "SOAP Web Service(Java) 구현하여 IBM SIM API 호출",
+                    "HR 시스템과 연동하여 겸직/퇴사자 계정 자동 처리"
+                ]
+            },
+            {
+                id: 17,
+                name: "라이나생명 계정관리 EAM 프로젝트",
+                period: "2013년 3월 - 2013년 5월",
+                team: "7명(PM 1명, SE 4명, 개발 2명)",
+                role: "개발자",
+                stack: ["Java", "DB2", "LDAP"],
+                summary: "라이나생명의 계정관리 시스템 구축을 위한 OS 계정관리 모듈 및 연동 환경을 개발했습니다.",
+                contributions: [
+                    "Java 및 DB2 드라이버를 사용하여 OS/360 메인프레임 계정관리 API 개발",
+                    "IBM Security Directory Server(LDAP) 기반 HR 시스템 구성 및 이중화",
+                    "IBM Security Access Manager(for Web)과 연동 환경 구성"
+                ]
+            },
+            {
+                id: 18,
+                name: "알리안츠생명(ABL) 서버접근제어 프로젝트",
+                period: "2013년 1월 - 2013년 3월",
+                team: "3명(PM 1명, SE 2명)",
+                role: "SE 및 개발",
+                stack: ["IBM SIM", "Java", "C", "Oracle", "SQL Server"],
+                summary: "알리안츠생명(ABL)의 서버 접근제어 시스템을 구축하고 IBM 계정관리 솔루션 연동 및 보고서 시스템을 개발했습니다.",
+                contributions: [
+                    "SIM 구축 및 전체 서버 계정관리 지원",
+                    "프로비저닝, 비밀번호 등 다양한 정책 설계",
+                    "DBMS 계정관리 및 HR 시스템과 연동(Java, C) 기능 구현",
+                    "접근제어시스템(GATEONE)과 연동 환경 구성"
+                ]
+            }
+        ];
+
+        const timelineContainer = document.getElementById('timeline-container');
+        const filterContainer = document.getElementById('filter-container');
+        const modal = document.getElementById('project-modal');
+        let activeFilter = 'All';
+
+        function renderTimeline(filter = 'All') {
+            timelineContainer.innerHTML = '';
+            const filteredProjects = filter === 'All' ? projects : projects.filter(p => p.stack.includes(filter));
+
+            filteredProjects.forEach(project => {
+                const projectElement = document.createElement('div');
+                projectElement.className = 'timeline-item relative pb-8 cursor-pointer';
+                projectElement.setAttribute('data-id', project.id);
+                projectElement.innerHTML = `
+                    <div class="ml-8 pl-8">
+                        <p class="text-sm text-slate-500">${project.period}</p>
+                        <h4 class="text-lg font-bold text-slate-800 mt-1">${project.name}</h4>
+                        <p class="text-slate-600 mt-2">${project.role}</p>
+                    </div>
+                `;
+                projectElement.addEventListener('click', () => openModal(project.id));
+                timelineContainer.appendChild(projectElement);
+            });
+        }
+
+        function renderFilters() {
+            const allStacks = new Set(projects.flatMap(p => p.stack));
+            const sortedStacks = ['All', ...Array.from(allStacks).sort()];
+            
+            sortedStacks.forEach(stack => {
+                const button = document.createElement('button');
+                button.textContent = stack;
+                button.className = 'filter-btn px-4 py-2 text-sm font-medium rounded-full transition bg-white text-slate-600 border border-slate-300 hover:bg-slate-100';
+                if (stack === 'All') {
+                    button.classList.add('tag-active');
+                }
+                button.addEventListener('click', () => {
+                    activeFilter = stack;
+                    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('tag-active'));
+                    button.classList.add('tag-active');
+                    renderTimeline(stack);
+                });
+                filterContainer.appendChild(button);
+            });
+        }
+
+        function openModal(projectId) {
+            const project = projects.find(p => p.id === projectId);
+            if (!project) return;
+
+            document.getElementById('modal-title').textContent = project.name;
+            document.getElementById('modal-period').textContent = project.period;
+            document.getElementById('modal-role').textContent = project.role;
+            document.getElementById('modal-team').textContent = project.team;
+            document.getElementById('modal-summary').textContent = project.summary;
+
+            const stackContainer = document.getElementById('modal-stack');
+            stackContainer.innerHTML = '';
+            project.stack.forEach(tech => {
+                const techEl = document.createElement('span');
+                techEl.className = 'bg-slate-200 text-slate-800 px-3 py-1 rounded-full text-xs font-semibold';
+                techEl.textContent = tech;
+                stackContainer.appendChild(techEl);
+            });
+
+            const contributionsContainer = document.getElementById('modal-contributions');
+            contributionsContainer.innerHTML = '';
+            project.contributions.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                contributionsContainer.appendChild(li);
+            });
+            
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                modal.querySelector('.modal-backdrop').style.opacity = '1';
+                modal.querySelector('.modal-content').style.transform = 'scale(1)';
+            }, 10);
+        }
+
+        function closeModal() {
+            modal.querySelector('.modal-backdrop').style.opacity = '0';
+            modal.querySelector('.modal-content').style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderFilters();
+            renderTimeline();
+        });
+    </script>
+</body>
+</html>
